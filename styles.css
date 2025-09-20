@@ -1,0 +1,293 @@
+
+.soundButton {
+
+    border-style: solid;
+    border-radius: 20px;
+    width: 50px;
+    height: 50px;
+    color: white;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    color: black;
+    /* font-size: 50px; */
+    margin-left: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+    display: inline-block;
+    transition: all 0.1s;
+    transform-origin: center center;
+
+}
+body
+{
+    background-repeat: no-repeat;  /* show only once */
+    background-size: cover;   /* fills entire area, cropping if needed */
+
+
+}
+.hugeBtn {
+    border-top: 2px solid white;
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+    border-style: solid;
+    border-radius: 20px 0px 0px 20px;
+    width: 400px;
+    height: 100px;
+    color: white;
+    background-color: rgb(88, 72, 125);
+    position: absolute;
+    font-size: 60px;
+    margin-left: 18rem;
+    margin-top: 35rem;
+    text-align: center;
+    display: inline-block;
+    transition: all 0.1s;
+    transform-origin: center center;
+
+}
+
+#resetButton {
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    border-style: solid;
+    border-radius: 0px 20px 20px 0px;
+    font-size: 35px;
+    background-color: rgb(187, 49, 49);
+    width: 110px;
+    position: absolute;
+    margin-left: 43rem;
+    /* text-align: center; */
+}
+
+#resetButton:active {
+    transform: scale(0.97);
+    transition: all 0.1s;
+}
+
+#resetButton:hover {
+    background-color: rgb(210, 90, 90);
+}
+
+.hugeBtn:active {
+    transform: scale(0.97);
+    transition: all 0.1s;
+}
+
+.hugeBtn:hover {
+    background-color: rgb(210, 90, 90);
+}
+
+.todolabel {
+    font-size: 50px;
+    margin-left: 60rem;
+    color: #ffffff;
+    font-weight: 300;
+    position: absolute;
+    margin-top: 6rem;
+}
+
+.timerText {
+    display: block;
+    position: absolute;
+    font-size: 125px;
+    margin-left: 25rem;
+    margin-top: 17rem;
+    font-weight: 400;
+    color: rgb(255, 255, 255)
+}
+
+.createNewBtn:active {
+    transform: scale(0.95);
+    background-color: #C8CCD4;
+
+}
+
+.listDiv {
+    width: 500px;
+    height: auto;
+    font-size: 35px;
+    margin: 10px;
+    margin-left: 60rem;
+    position: absolute;
+    padding: 3px;
+    background-color: #C8CCD4;
+    border-radius: 15px;
+    border-width: 0px;
+    transition: all 1s;
+    left: 0px;
+    position: relative;
+    overflow: auto;
+
+    display: flex;
+    align-items: center;
+
+}
+
+
+.listDiv:active {
+    background-color: #C8CCD4;
+}
+
+.checkboxItem {
+    width: 30px;
+    height: 4rem;
+    position: absolute;
+    left: 410px;
+
+
+
+}
+
+.containerDiv {
+    display: inline-table;
+    position: absolute;
+    position: absolute;
+    margin-top: 11rem;
+
+}
+
+.textLabel {
+    font-size: 22px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding: 10px;
+    width: 78%;
+    margin: 5px;
+
+
+
+}
+
+html {
+    overflow: hidden;
+    height: 100%;
+}
+
+#plusIcon {
+    font-size: larger;
+    vertical-align: middle
+}
+
+
+.button-row {
+    display: flex;
+    justify-content: flex-start;
+
+    gap: 20px;
+    margin: 1rem 0;
+    width: 100%;
+    /* This is important */
+}
+
+
+.createNewBtn {
+    margin-left: 60rem;
+
+    width: 300px;
+    height: 60px;
+    font-size: 30px;
+    color: rgb(88, 88, 88);
+    border-radius: 15px;
+    border: none;
+    transition: all 0.15s;
+}
+
+#clearListBtn {
+    margin-left: 1rem;
+
+    width: 170px;
+    height: 60px;
+    font-size: 24px;
+    background-color: #d8a9a9;
+    color: #444;
+    border-radius: 15px;
+    border: none;
+
+}
+
+.deletebn {
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+
+    position: absolute;
+    margin-left: 0px;
+
+    left: 450px;
+    vertical-align: middle;
+
+    color: rgb(112, 54, 54);
+    border-radius: 15px;
+    border-width: 0px;
+    transition: all 0.15s;
+
+}
+
+
+.h4s {
+    margin: 7px 0 0;
+    border-bottom: 1px solid #eaeaea;
+    color: #9a9fa8;
+    font-size: 12px;
+    display: block;
+    /* margin-block-start: 1.33em; */
+    /* margin-block-end: 1.33em; */
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+.input-container {
+    position: relative;
+    width: 300px;
+}
+[contenteditable]:focus {
+  outline: none;         
+  box-shadow: none;   
+}
+
+.dropdown {
+    position: absolute;
+    /* top: 40px; */
+    /* left: 0; */
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+
+}
+
+.selectoptions {
+    padding: 10px;
+    padding-top: 10px;
+
+    cursor: pointer;
+    background-color: #6bbaeb;
+    border-radius: 10px;
+    width: 470px;
+    margin: 0px 10px 10px 100rem;
+    position: relative;
+    font-size: larger;
+}
+
+.dropdown div:hover {
+    background: #f0f0f0;
+
+}
+
+.hidden {
+    display: none;
+}
+
+* {
+    font-family: Roboto, Arial, Helvetica, sans-serif
+}
