@@ -220,9 +220,17 @@ body {
   font-weight: bold;
   display: block;
 }
+html, body {
+  margin: 0;        /* remove default margin */
+  padding: 0;
+  overflow: hidden; /* prevents any scrolling */
+  height: 100%;     /* make body full height */
+}
 
 /* --- Contenteditable --- */
 [contenteditable]:focus {
   outline: none;
   box-shadow: none;
 }
+
+  
