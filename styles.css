@@ -5,10 +5,12 @@
 }
 
 body {
-  background-repeat: no-repeat;
-  background-size: cover;
-  margin: 0;
-  padding: 0;
+  background-image: url('your-image.jpg'); /* your image */
+  background-repeat: no-repeat;            /* don’t tile */
+  background-position: center center;      /* center the image */
+  background-size: cover;                  /* fill the screen, crop if necessary */
+  margin: 0;                               /* remove default body margin */
+  height: 100vh;  
 }
 
 /* --- Buttons --- */
