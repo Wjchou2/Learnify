@@ -21,7 +21,7 @@
 body
 {
     background-repeat: no-repeat;  /* show only once */
-    background-size: cover;   /* fills entire area, cropping if needed */
+    background-size:cover;   /* fills entire area, cropping if needed */
 
 
 }
