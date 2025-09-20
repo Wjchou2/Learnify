@@ -115,9 +115,6 @@ container.id = "container";
 document.body.appendChild(container);
 document.body.style.backgroundImage = `url("https://i.postimg.cc/J0c0K0kx/Chat-GPT-Image-Sep-20-2025-12-31-04-PM.png")`;
 
-let todoHeader = document.createElement("p");
-todoHeader.className = "todolabel";
-todoHeader.innerHTML = "Todo List:";
 let startTimerButton = document.createElement("button");
 startTimerButton.className = "hugeBtn";
 startTimerButton.innerHTML = "Study";
@@ -128,7 +125,7 @@ resetButton.innerHTML = "Reset";
 let timerText = document.createElement("h1");
 timerText.className = "timerText";
 timerText.innerHTML = "0:00";
-container.appendChild(todoHeader);
+
 container.appendChild(startTimerButton);
 container.appendChild(resetButton);
 container.appendChild(timerText);
@@ -137,8 +134,15 @@ function updateList() {
     if (todoListDiv) {
         todoListDiv.remove();
     }
+
     todoListDiv = document.createElement("div");
     todoListDiv.className = "containerDiv";
+
+    let todoHeader = document.createElement("p");
+    todoHeader.className = "todolabel";
+    todoHeader.innerHTML = "Todo List:";
+    todoListDiv.appendChild(todoHeader);
+
     let todoListItemCount = -1;
     startTimerButton.before(todoListDiv);
     todoListDiv.appendChild(buttonRow);
