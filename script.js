@@ -2,6 +2,8 @@ let timerIsOn = false;
 
 let lastBlurTime = 0; // To store the timestamp when the window is blurred
 let todoList = [];
+let timeLeft = 1500;
+let countdown = null;
 todoList = localStorage.getItem("todo");
 todoList = JSON.parse(todoList);
 if (todoList == null) {
@@ -111,8 +113,7 @@ let container = document.createElement("div");
 container.id = "container";
 
 document.body.appendChild(container);
-// document.body.style.backgroundImage = `url("https://flocus.com/minimalist-pomodoro-timer/8e6ce4c67a9bf6bf67d0.jpg")`;
-document.body.style.backgroundImage = `url("https://sdmntprcentralus.oaiusercontent.com/files/00000000-e41c-61f5-8b1c-a5233cecb21b/raw?se=2025-09-20T18%3A24%3A00Z&sp=r&sv=2024-08-04&sr=b&scid=fc26ea4b-527e-5042-a310-7efa610c6875&skoid=77636ecc-ad8d-44df-baa7-163b524a0261&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-19T20%3A04%3A05Z&ske=2025-09-20T20%3A04%3A05Z&sks=b&skv=2024-08-04&sig=PFhDgTg27%2BYccLT8YoTAcdqr9blG2urvM4bBs9cb2Rk%3D")`;
+document.body.style.backgroundImage = `url("https://i.postimg.cc/J0c0K0kx/Chat-GPT-Image-Sep-20-2025-12-31-04-PM.png")`;
 
 let todoHeader = document.createElement("p");
 todoHeader.className = "todolabel";
@@ -272,24 +273,24 @@ soundsButton.innerHTML = "Music";
 container.appendChild(soundsButton);
 let ytContainer = document.createElement("div");
 document.body.appendChild(ytContainer);
-let iframe = document.createElement("iframe");
-iframe.width = "100";
-iframe.height = "100";
-iframe.style.display = "block"; // Hide iframe, it will play in the background
-iframe.src =
-    "https://www.youtube.com/embed/Rm2vkXRFJ-s?autoplay=1&start=48&controls=0&modestbranding=1&rel=0&showinfo=0";
-soundsButton.addEventListener("click", function () {
-    if (selectedSound == 1) {
-        selectedSound = 0;
-        iframe.src =
-            "https://www.youtube.com/embed/WPni755-Krg?autoplay=1&start=48&controls=0&modestbranding=1&rel=0&showinfo=0";
-    } else {
-        iframe.src =
-            "https://www.youtube.com/embed/Rm2vkXRFJ-s?autoplay=1&start=48&controls=0&modestbranding=1&rel=0&showinfo=0";
-        selectedSound = 1;
-    }
-});
-document.body.appendChild(iframe);
+// let iframe = document.createElement("iframe");
+// iframe.width = "100";
+// iframe.height = "100";
+// iframe.style.display = "block"; // Hide iframe, it will play in the background
+// iframe.src =
+//     "https://www.youtube.com/embed/Rm2vkXRFJ-s?autoplay=1&start=48&controls=0&modestbranding=1&rel=0&showinfo=0";
+// soundsButton.addEventListener("click", function () {
+//     if (selectedSound == 1) {
+//         selectedSound = 0;
+//         iframe.src =
+//             "https://www.youtube.com/embed/WPni755-Krg?autoplay=1&start=48&controls=0&modestbranding=1&rel=0&showinfo=0";
+//     } else {
+//         iframe.src =
+//             "https://www.youtube.com/embed/Rm2vkXRFJ-s?autoplay=1&start=48&controls=0&modestbranding=1&rel=0&showinfo=0";
+//         selectedSound = 1;
+//     }
+// });
+// document.body.appendChild(iframe);
 container.appendChild(buttonRow);
 clearBtn.addEventListener("click", function () {
     todoList = [];
@@ -313,8 +314,7 @@ createNewBtn.addEventListener("click", function () {
     localStorage.setItem("todo", JSON.stringify(todoList));
     updateList();
 });
-let timeLeft = 1500;
-let countdown = null;
+
 let isOnStorage = localStorage.getItem("timerIsOn");
 let timeLeftStorage = localStorage.getItem("timeLeft");
 if (isOnStorage && timeLeftStorage) {
