@@ -3,34 +3,72 @@
     font-family: Roboto, Arial, Helvetica, sans-serif;
     box-sizing: border-box;
 }
+#openMenu{
+width: 20%;
+aspect-ratio: 1/1;
+font-size: 30px;
+position: absolute;
+/* margin-top: 50%; */
+background-color: #ffffff;
+margin-left: 100%;
+  display: flex;
+  border-radius: 10px;
+  background-color: #6f7070;
+  justify-content: center; /* horizontal */
+  align-items: center;     /* vertical */
 
+}
 #musicPlayer {
     position: absolute;
 border-radius: 10px;
     width: 20%;
-    height: 50%;
+   margin-left: -20%;
+    aspect-ratio: 1/1.5;
     background-color: #6bbaeb;
+    transition: margin-left 0.5s;
 
-}
-.musicEntry{
-    width: 90%;
-    height: 10%;
-    background-color: #444;
-
-}
-.musicEntry .textLabel{
-    width: 100%;
-    height: 100%;
 }
 #musicSettings{
+
+  display: flex;          /* enables flex layout */
+  gap: 1rem;              /* space between elements */
     background-color: #ffffff;
      width: 100%;
        height: 10%;
        position: absolute;
        top: 90%;
-text-align: center;
    
 }
+#playButton{
+    cursor: pointer;
+    font-size: 2rem;
+margin-top: 0.5rem;
+display: inline-block;
+}
+#currentPlaying{
+margin-left: 20%;
+    display: inline-block;
+
+}
+.musicEntry{
+    /* width: 90%; */
+    height: 15%;
+    text-align: center;
+overflow: hidden;
+margin-bottom: 1rem;
+  margin: 5px;
+  border-radius: 10px;
+    background-color: #444;
+}
+.musicEntry .textLabel{
+    /* margin: 0px; */
+    width: 100%;
+    height: 100%;
+     font-size: clamp(20px, 50px, 50px);
+     /* margin-top: 8px; */
+     /* font-size: 90%; */
+}
+
 #myVideo{
     display: none;
 }

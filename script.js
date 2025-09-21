@@ -6,10 +6,11 @@ let timeLeft = 1500;
 let countdown = null;
 
 let sounds = [
-    "https://www.youtube.com/watch?v=9BySuO1aWPU",
-    "https://www.youtube.com/embed/Rm2vkXRFJ-s?&start=47",
-    "https://www.youtube.com/watch?v=FcvKzn3n514",
+    "https://www.youtube.com/watch?v=WPni755-Krg",
+    "https://www.youtube.com/watch?v=jfKfPfyJRdk",
+    "https://www.youtube.com/watch?v=sjkrrmBnpGE",
 ];
+let titles = ["Alpha Brain Waves", "Lofi Girl", "Ambient"];
 let musicPanel = document.getElementById("musicSettings");
 let player;
 
@@ -31,6 +32,14 @@ function playVideo() {
     player.playVideo();
 }
 drawSoundsPanel();
+let menuIsOpen = false;
+function openMenu() {
+    menuIsOpen = !menuIsOpen;
+    document.getElementById("musicPlayer").style.marginLeft = menuIsOpen
+        ? "0%"
+        : "-20%";
+    document.getElementById("openMenu").innerText = menuIsOpen ? "<" : ">";
+}
 
 function drawSoundsPanel() {
     for (let i = 0; i < sounds.length; i++) {
@@ -38,13 +47,14 @@ function drawSoundsPanel() {
         musicEntry.className = "musicEntry";
         musicPanel.before(musicEntry);
         let textLabel = document.createElement("p");
-        textLabel.innerHTML = sounds[i];
+        textLabel.innerHTML = titles[i];
         musicEntry.appendChild(textLabel);
 
         musicEntry.addEventListener("click", function () {
-            const url = textLabel.innerText;
+            const url = sounds[i];
             const idWithTime = url.substring(url.lastIndexOf("=") + 1);
             // Load a new video by ID
+            document.getElementById("currentPlaying").innerHTML = titles[i];
             player.loadVideoById(idWithTime, 0); // 0 = start at 0 seconds
         });
     }
