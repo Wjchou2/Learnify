@@ -55,7 +55,15 @@ function drawSoundsPanel() {
             const idWithTime = url.substring(url.lastIndexOf("=") + 1);
             // Load a new video by ID
             document.getElementById("currentPlaying").innerHTML = titles[i];
-            player.loadVideoById(idWithTime, 0); // 0 = start at 0 seconds
+
+            document.getElementById("myVideo").src =
+                "https://www.youtube.com/embed/" +
+                idWithTime +
+                "?autoplay=1" +
+                "&controls=0" +
+                "&modestbranding=1" +
+                "&rel=0" +
+                "&showinfo=0";
         });
     }
 }

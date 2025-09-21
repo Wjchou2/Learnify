@@ -8,6 +8,7 @@ width: 20%;
 aspect-ratio: 1/1;
 font-size: 30px;
 position: absolute;
+color:white;
 /* margin-top: 50%; */
 background-color: #ffffff;
 margin-left: 100%;
@@ -57,8 +58,11 @@ margin-left: 20%;
 overflow: hidden;
 margin-bottom: 1rem;
   margin: 5px;
+  color: white;
+  font-weight: bolder;
   border-radius: 10px;
     background-color: #444;
+    font-size:150% ;
 }
 .musicEntry .textLabel{
      cursor: pointer;
@@ -71,7 +75,17 @@ margin-bottom: 1rem;
 }
 
 #myVideo{
-    display: none;
+  position: fixed;       /* stays in place when scrolling */
+  bottom: 0;             /* 0px from the bottom */
+  left: 0;               /* 0px from the left */
+  width: 15%;            /* or whatever width you like */
+  aspect-ratio: 3 / 2;   /* keep proportion */
+  /* optional spacing */
+  margin: 1rem;          /* adds a bit of padding from edges */
+  /* optional z-index if it hides behind stuff */
+  z-index: 999;
+  /* display: none; */
+
 }
 body {
     background-image: url('your-image.jpg');
@@ -114,6 +128,8 @@ body {
     justify-content: center;
     align-items: center;
     transition: all 0.1s;
+    margin-top: 35%;
+    /* position: absolute; */
 
 
 }
@@ -216,6 +232,7 @@ body {
     margin: 2rem 62%;
     aspect-ratio: 3/1;
     width: 90%;
+     position: absolute;
 }
 
 /* --- Text Labels --- */
