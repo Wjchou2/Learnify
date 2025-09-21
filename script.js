@@ -117,6 +117,8 @@ document.body.style.backgroundImage = `url("https://i.postimg.cc/J0c0K0kx/Chat-G
 
 let startTimerButton = document.createElement("button");
 startTimerButton.className = "hugeBtn";
+startTimerButton.id = "studyButton";
+
 startTimerButton.innerHTML = "Study";
 let resetButton = document.createElement("button");
 resetButton.className = "hugeBtn";
@@ -125,10 +127,10 @@ resetButton.innerHTML = "Reset";
 let timerText = document.createElement("h1");
 timerText.className = "timerText";
 timerText.innerHTML = "0:00";
+container.appendChild(timerText);
 
 container.appendChild(startTimerButton);
 container.appendChild(resetButton);
-container.appendChild(timerText);
 function updateList() {
     let todoListDiv = document.getElementsByClassName("containerDiv")[0];
     if (todoListDiv) {
