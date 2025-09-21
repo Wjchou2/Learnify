@@ -9,8 +9,9 @@ let sounds = [
     "https://www.youtube.com/watch?v=WPni755-Krg",
     "https://www.youtube.com/watch?v=jfKfPfyJRdk",
     "https://www.youtube.com/watch?v=sjkrrmBnpGE",
+    "https://www.youtube.com/watch?v=Rm2vkXRFJ-s",
 ];
-let titles = ["Alpha Brain Waves", "Lofi Girl", "Ambient"];
+let titles = ["Alpha Brain Waves", "Lofi Girl", "Ambient", "Study With Duo"];
 let musicPanel = document.getElementById("musicSettings");
 let player;
 
