@@ -195,7 +195,7 @@ body {
 .listDiv {
     display: flex;
     align-items: center;
-    width: clamp(100px, 50%, 500px);
+    width: clamp(100px, 40%, 500px);
     font-size: clamp(1rem, 2vw, 2rem);
     aspect-ratio: 20/1;
     background-color: #C8CCD4;
