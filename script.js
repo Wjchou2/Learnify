@@ -4,6 +4,71 @@ let lastBlurTime = 0; // To store the timestamp when the window is blurred
 let todoList = [];
 let timeLeft = 1500;
 let countdown = null;
+
+let sounds = [
+    "https://www.youtube.com/watch?v=9BySuO1aWPU",
+    "https://www.youtube.com/embed/Rm2vkXRFJ-s?&start=47",
+    "https://www.youtube.com/watch?v=FcvKzn3n514",
+];
+let musicPanel = document.getElementById("musicSettings");
+let player;
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player("myVideo", {
+        events: {
+            onStateChange: onPlayerStateChange,
+        },
+    });
+}
+
+// Pause the video
+function pauseVideo() {
+    player.pauseVideo();
+}
+
+// Play the video
+function playVideo() {
+    player.playVideo();
+}
+drawSoundsPanel();
+
+function drawSoundsPanel() {
+    for (let i = 0; i < sounds.length; i++) {
+        let musicEntry = document.createElement("div");
+        musicEntry.className = "musicEntry";
+        musicPanel.before(musicEntry);
+        let textLabel = document.createElement("p");
+        textLabel.innerHTML = sounds[i];
+        musicEntry.appendChild(textLabel);
+
+        musicEntry.addEventListener("click", function () {
+            const url = textLabel.innerText;
+            const idWithTime = url.substring(url.lastIndexOf("=") + 1);
+            // Load a new video by ID
+            player.loadVideoById(idWithTime, 0); // 0 = start at 0 seconds
+        });
+    }
+}
+function onPlayerStateChange(event) {
+    switch (event.data) {
+        case YT.PlayerState.PLAYING:
+            document.getElementById("playButton").innerText = "pause";
+
+            break;
+        case YT.PlayerState.PAUSED:
+            document.getElementById("playButton").innerText = "play_arrow";
+
+            break;
+    }
+}
+let isPlayingMusic = false;
+document.getElementById("playButton").addEventListener("click", function () {
+    if (player.getPlayerState() == 1) {
+        pauseVideo();
+    } else {
+        playVideo();
+    }
+});
 todoList = localStorage.getItem("todo");
 todoList = JSON.parse(todoList);
 if (todoList == null) {
@@ -38,7 +103,7 @@ function returned() {
             const secondsElapsed = currentTime - lastBlurTime;
             timeLeft -= secondsElapsed;
             lastBlurTime = 0;
-            if (timeLeft >= 0) {
+            if (timeLeft > 0) {
                 toggleTimerState();
             } else {
                 timeLeft = 0;
@@ -63,38 +128,6 @@ const tags = [
 let asignmentcontainer = document.createElement("div");
 asignmentcontainer.id = "asignmentcontainer";
 document.body.appendChild(asignmentcontainer);
-// function getCurrentAsignments() {
-//     fetch("https://schoology.shschools.org/home/upcoming_submissions_ajax")
-//         .then((response) => {
-//             if (!response.ok) {
-//                 throw new Error(`HTTP error! Status: ${response.status}`);
-//             }
-//             return response.json(); // Assuming the response is JSON
-//         })
-//         .then((data) => {
-//             let asignmentContainer =
-//                 document.getElementById("asignmentcontainer");
-//             asignmentContainer.innerHTML += data.html;
-//             let asignments = document.getElementsByClassName("event-title");
-//             Array.from(asignments).forEach((asignment) => {
-//                 var _a;
-//                 let asignmentName = asignment.firstElementChild;
-//                 let asignmentTag =
-//                     (_a = asignment.lastElementChild) === null ||
-//                     _a === void 0
-//                         ? void 0
-//                         : _a.lastElementChild;
-//                 options.push(asignmentName.innerText);
-//                 optionTags.push(asignmentTag.innerText);
-//             });
-//             asignmentcontainer.remove();
-//         })
-//         .catch((error) => {
-//             console.error("Error fetching data:", error);
-//             return error;
-//         });
-// }
-//FINISH LABELING VARIABLES BELOW
 
 let pageTitle = document.getElementsByTagName("title")[0];
 pageTitle.innerText = "Learnify";
@@ -230,7 +263,7 @@ function updateList() {
             localStorage.setItem("todo", JSON.stringify(todoList));
             let parent = this.parentElement;
             parent.style.transition = "all 0.5s";
-            parent.style.left = "500px";
+            parent.style.marginLeft = "10%";
             parent.style.opacity = "0";
             setTimeout(() => {
                 updateList();
@@ -257,7 +290,7 @@ function updateList() {
         todoItemCheckBox.addEventListener("input", saveUpdatedList);
     });
 }
-document.head.innerHTML += `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=add" />`;
+
 let createNewBtn = document.createElement("button");
 createNewBtn.className = "createNewBtn";
 let clearBtn = document.createElement("button");
@@ -267,7 +300,7 @@ clearBtn.innerHTML = "Clear All";
 clearBtn.style.backgroundColor = "rgb(223 160 160)";
 createNewBtn.innerHTML = `<span id="plusIcon" class="material-symbols-outlined">
 add
-</span><span> Create new Item</span>`;
+</span><span> Create new Task</span>`;
 let buttonRow = document.createElement("div");
 buttonRow.className = "button-row"; // For styling
 buttonRow.appendChild(createNewBtn);
@@ -276,27 +309,11 @@ let selectedSound = 1;
 let soundsButton = document.createElement("button");
 soundsButton.className = "soundButton";
 soundsButton.innerHTML = "Music";
-container.appendChild(soundsButton);
+// container.appendChild(soundsButton);
 let ytContainer = document.createElement("div");
 document.body.appendChild(ytContainer);
-// let iframe = document.createElement("iframe");
-// iframe.width = "100";
-// iframe.height = "100";
-// iframe.style.display = "block"; // Hide iframe, it will play in the background
-// iframe.src =
-//     "https://www.youtube.com/embed/Rm2vkXRFJ-s?autoplay=1&start=48&controls=0&modestbranding=1&rel=0&showinfo=0";
-// soundsButton.addEventListener("click", function () {
-//     if (selectedSound == 1) {
-//         selectedSound = 0;
-//         iframe.src =
-//             "https://www.youtube.com/embed/WPni755-Krg?autoplay=1&start=48&controls=0&modestbranding=1&rel=0&showinfo=0";
-//     } else {
-//         iframe.src =
-//             "https://www.youtube.com/embed/Rm2vkXRFJ-s?autoplay=1&start=48&controls=0&modestbranding=1&rel=0&showinfo=0";
-//         selectedSound = 1;
-//     }
-// });
-// document.body.appendChild(iframe);
+//YT FRAME
+
 container.appendChild(buttonRow);
 clearBtn.addEventListener("click", function () {
     todoList = [];
@@ -316,15 +333,18 @@ clearBtn.addEventListener("click", function () {
 //     }
 // });
 createNewBtn.addEventListener("click", function () {
-    todoList.push(["New Item", false]);
+    todoList.push(["New Task", false]);
     localStorage.setItem("todo", JSON.stringify(todoList));
     updateList();
 });
-
+function clamp(value, min, max) {
+    return Math.max(min, Math.min(value, max));
+}
 let isOnStorage = localStorage.getItem("timerIsOn");
 let timeLeftStorage = localStorage.getItem("timeLeft");
 if (isOnStorage && timeLeftStorage) {
     timerIsOn = JSON.parse(isOnStorage);
+    // timeLeftStorage = clamp(timeLeftStorage, 0, 1000000);
     timeLeft = JSON.parse(timeLeftStorage);
     toggleTimerState();
 }
@@ -358,10 +378,11 @@ function toggleTimerState() {
     }
     if (timerIsOn) {
         countdown = setInterval(() => {
-            timeLeft -= 0.1;
             localStorage.setItem("timeLeft", JSON.stringify(timeLeft));
+            timeLeft = clamp(timeLeft - 0.1, 0, 100000);
+
             setTextLabel();
-            if (timeLeft <= 0) {
+            if (timeLeft <= 0.1) {
                 timerText.innerHTML = "0:00";
                 timerIsOn = false;
                 timeLeft = 1500;
