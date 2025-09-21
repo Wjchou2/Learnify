@@ -2,7 +2,7 @@
 
 I wanted to create a simple but effective way to organize my time and my tasks so heres Learnify:
 
-Your personal dashboard to manage tasks with a timer and checklist.
+<b>Your personal dashboard to manage tasks with a timer and checklist.</b>
 <img src="Demoimage.png"></img>
 
 ## Try it!
