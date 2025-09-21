@@ -1,6 +1,6 @@
 # Learnify
 
-I wanted to create a simple but effective way to organize my time and my tasks so heres Learnify:
+I wanted to create a simple but effective way to organize my time and my tasks so here'ss Learnify:
 
 <b>Your personal dashboard to manage tasks with a timer and checklist.</b>
 <img src="Demoimage.png"></img>
@@ -11,7 +11,7 @@ A dashboard to manage your time efficiently, with a saving checklist, timer, and
 
 Click the link and to try out the website: <a>https://wjchou2.github.io/Learnify/index.html</a>
 
-Create new tasks, check them off and click the X to clear them.
+Create new tasks, check them off, and click the X to clear them.
 
 Choose from a couple different background sounds to listen to, more coming soon.
 
