@@ -93,8 +93,8 @@ todoList = JSON.parse(todoList);
 if (todoList == null) {
     todoList = [];
 }
-window.addEventListener("blur", leave);
-window.addEventListener("focus", returned);
+// window.addEventListener("blur", leave);
+// window.addEventListener("focus", returned);
 window.addEventListener("beforeunload", leave);
 window.addEventListener("load", returned);
 let awaytimeout;
