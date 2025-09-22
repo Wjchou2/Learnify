@@ -48,6 +48,7 @@ function drawSoundsPanel() {
         musicEntry.className = "musicEntry";
         musicPanel.before(musicEntry);
         let textLabel = document.createElement("p");
+        textLabel.className = "musicLabel";
         textLabel.innerHTML = titles[i];
         musicEntry.appendChild(textLabel);
 
@@ -274,7 +275,7 @@ function updateList() {
             localStorage.setItem("todo", JSON.stringify(todoList));
             let parent = this.parentElement;
             parent.style.transition = "all 0.5s";
-            parent.style.marginLeft = "10%";
+            parent.style.marginLeft = "30%";
             parent.style.opacity = "0";
             setTimeout(() => {
                 updateList();
