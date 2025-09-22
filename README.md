@@ -3,7 +3,7 @@
 I wanted to create a simple but effective way to organize my time and my tasks so here'ss Learnify:
 
 <b>Your personal dashboard to manage tasks with a timer and checklist.</b>
-<img src="Demoimage.png"></img>
+<img src="Demoimage2.png"></img>
 
 ## Try it!
 

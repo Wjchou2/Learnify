@@ -89,11 +89,14 @@ document.getElementById("playButton").addEventListener("click", function () {
         playVideo();
     }
 });
-todoList = localStorage.getItem("todo");
-todoList = JSON.parse(todoList);
-if (todoList == null) {
-    todoList = [];
+function updateTodoList() {
+    todoList = localStorage.getItem("todo");
+    todoList = JSON.parse(todoList);
+    if (todoList == null) {
+        todoList = [];
+    }
 }
+updateTodoList();
 // window.addEventListener("blur", leave);
 // window.addEventListener("focus", returned);
 window.addEventListener("beforeunload", leave);
@@ -194,10 +197,15 @@ function updateList() {
     startTimerButton.before(todoListDiv);
     todoListDiv.appendChild(buttonRow);
     // todoListDiv.appendChild(clearBtn);
+    let ul = document.createElement("ul");
+    ul.className = "ul";
+
+    buttonRow.before(ul);
+
     todoList.forEach((item) => {
         todoListItemCount++;
         const [itemName, values] = item;
-        let todoItemDiv = document.createElement("div");
+        let todoItemDiv = document.createElement("li");
         todoItemDiv.className = "listDiv";
         let todoItemName = document.createElement("p");
         todoItemName.className = "textLabel";
@@ -209,16 +217,26 @@ function updateList() {
         todoItemCheckBox.checked = values;
         todoItemCheckBox.className = "checkboxItem";
         todoItemCheckBox.id = "checkbox" + String(todoListItemCount);
-        let todoItemRemove = document.createElement("button");
-        todoItemRemove.className = "deletebn";
+        let todoItemRemove = document.createElement("span");
+        todoItemRemove.className = "deletebtn";
+        todoItemRemove.innerHTML = "x";
         todoItemRemove.id = "deletebn" + String(todoListItemCount);
-        todoItemRemove.innerHTML = "X";
         todoItemDiv.style.marginTop = "0px";
         todoItemCheckBox.style.marginTop = "0px";
-        buttonRow.before(todoItemDiv);
+
+        let dragIcon = document.createElement("p");
+        dragIcon.className = "dragIcon";
+        dragIcon.innerHTML = `<span class="material-symbols-outlined">drag_handle</span>`;
+
+        todoItemDiv.style.marginTop = "0px";
+        todoItemCheckBox.style.marginTop = "0px";
+
+        ul.appendChild(todoItemDiv);
         todoItemDiv.appendChild(todoItemName);
         todoItemDiv.appendChild(todoItemCheckBox);
         todoItemDiv.appendChild(todoItemRemove);
+        todoItemDiv.appendChild(dragIcon);
+
         let todoOptions = document.createElement("section");
         todoItemName.addEventListener("input", () => {
             const query = todoItemName.innerText.toLowerCase();
@@ -267,11 +285,12 @@ function updateList() {
         todoItemDiv.after(todoOptions);
         todoItemRemove.addEventListener("click", function () {
             let todoListItemIndex = this.id;
+            console.log(this);
             todoListItemIndex = String(todoListItemIndex).slice(
                 8,
                 todoListItemIndex.length
             );
-            todoList.splice(Number(todoListItemIndex), 1); // 2nd parameter means remove one item only
+            todoList.splice(Number(todoListItemIndex), 1);
             localStorage.setItem("todo", JSON.stringify(todoList));
             let parent = this.parentElement;
             parent.style.transition = "all 0.5s";
@@ -300,6 +319,27 @@ function updateList() {
         }
         todoItemName.addEventListener("input", saveUpdatedList);
         todoItemCheckBox.addEventListener("input", saveUpdatedList);
+    });
+
+    new Sortable(ul, {
+        animation: 150, // smooth animation in ms
+        ghostClass: "sortable-ghost", // optional, adds class when dragging
+        onEnd: function (evt) {
+            console.log("dragged");
+            const newOrder = [];
+            ul.querySelectorAll("li").forEach((li) => {
+                const text = li.querySelector("p")?.textContent;
+                const checked =
+                    li.querySelector("input[type=checkbox]")?.checked || false;
+                newOrder.push([text, checked]);
+            });
+
+            // Save the new order
+            localStorage.setItem("todo", JSON.stringify(newOrder));
+
+            // Optional: update your in-memory array
+            todolist = newOrder;
+        },
     });
 }
 
@@ -345,6 +385,7 @@ clearBtn.addEventListener("click", function () {
 //     }
 // });
 createNewBtn.addEventListener("click", function () {
+    updateTodoList();
     todoList.push(["New Task", false]);
     localStorage.setItem("todo", JSON.stringify(todoList));
     updateList();
