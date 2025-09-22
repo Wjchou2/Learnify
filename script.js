@@ -102,13 +102,6 @@ function leave() {
     lastBlurTime = Math.round(new Date().getTime() / 1000);
     localStorage.setItem("lastBlurTime", JSON.stringify(lastBlurTime));
     clearInterval(countdown);
-    awaytimeout = setInterval(() => {
-        let title = document.getElementsByTagName("title")[0];
-        title.innerText = `(${timeString.substring(
-            0,
-            timeString.length - 1
-        )}) Learnify`;
-    }, 1000);
 }
 function returned() {
     if (awaytimeout) {
@@ -148,8 +141,7 @@ let asignmentcontainer = document.createElement("div");
 asignmentcontainer.id = "asignmentcontainer";
 document.body.appendChild(asignmentcontainer);
 
-let pageTitle = document.getElementsByTagName("title")[0];
-pageTitle.innerText = "Learnify";
+document.title = "Learnify";
 (_a = document.getElementById("content-wrapper")) === null || _a === void 0
     ? void 0
     : _a.remove();
@@ -367,7 +359,7 @@ if (isOnStorage && timeLeftStorage) {
     timeLeft = JSON.parse(timeLeftStorage);
     toggleTimerState();
 }
-setTextLabel();
+
 function setTextLabel() {
     if (String(Math.floor(timeLeft % 60)).length == 1) {
         timeString = `${Math.floor(timeLeft / 60)}:0${Math.floor(
@@ -378,12 +370,12 @@ function setTextLabel() {
             timeLeft % 60
         )} `;
     }
-    timerText.innerHTML = timeString;
-    let title = document.getElementsByTagName("title")[0];
-    title.innerText = `(${timeString.substring(
+
+    document.title = `(${timeString.substring(
         0,
         timeString.length - 1
     )}) Learnify`;
+    timerText.innerHTML = timeString;
 }
 function toggleTimerState() {
     if (timerIsOn) {
@@ -396,19 +388,6 @@ function toggleTimerState() {
         clearInterval(countdown);
     }
     if (timerIsOn) {
-        countdown = setInterval(() => {
-            localStorage.setItem("timeLeft", JSON.stringify(timeLeft));
-            timeLeft = clamp(timeLeft - 0.1, 0, 100000);
-
-            setTextLabel();
-            if (timeLeft <= 0.1) {
-                timerText.innerHTML = "0:00";
-                timerIsOn = false;
-                timeLeft = 1500;
-                toggleTimerState();
-                return;
-            }
-        }, 100);
     } else {
         if (countdown !== null) {
             clearInterval(countdown);
@@ -421,7 +400,7 @@ resetButton.addEventListener("click", function () {
     localStorage.setItem("timeLeft", JSON.stringify(timeLeft));
     timerIsOn = false;
     toggleTimerState();
-    setTextLabel();
+    // setTextLabel();
 });
 startTimerButton.addEventListener("click", function () {
     if (timerIsOn) {
@@ -433,3 +412,29 @@ startTimerButton.addEventListener("click", function () {
     }
     toggleTimerState();
 });
+const workerCode = `
+let counter = 0;
+setInterval(() => {
+    postMessage(counter++);
+   
+}, 100);
+`;
+
+const blob = new Blob([workerCode], { type: "application/javascript" });
+const worker = new Worker(URL.createObjectURL(blob));
+
+worker.onmessage = (e) => {
+    localStorage.setItem("timeLeft", JSON.stringify(timeLeft));
+    if (timerIsOn) {
+        timeLeft = clamp(timeLeft - 0.1, 0, 100000);
+
+        if (timeLeft <= 0.1) {
+            timerText.innerHTML = "0:00";
+            timerIsOn = false;
+            timeLeft = 1500;
+            toggleTimerState();
+            return;
+        }
+    }
+    setTextLabel();
+};
