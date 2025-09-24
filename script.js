@@ -4,6 +4,7 @@ let lastBlurTime = 0; // To store the timestamp when the window is blurred
 let todoList = [];
 let timeLeft = 1500;
 let countdown = null;
+let studyMode = true;
 
 let sounds = [
     "https://www.youtube.com/watch?v=WPni755-Krg",
@@ -34,12 +35,21 @@ function playVideo() {
 }
 drawSoundsPanel();
 let menuIsOpen = false;
+document.getElementById("openMenu").innerHTML = menuIsOpen
+    ? "<"
+    : `<span class="material-symbols-outlined">
+music_note
+</span>`;
 function openMenu() {
     menuIsOpen = !menuIsOpen;
     document.getElementById("musicPlayer").style.marginLeft = menuIsOpen
         ? "0%"
         : "-20%";
-    document.getElementById("openMenu").innerText = menuIsOpen ? "<" : ">";
+    document.getElementById("openMenu").innerHTML = menuIsOpen
+        ? "<"
+        : `<span class="material-symbols-outlined">
+music_note
+</span>`;
 }
 
 function drawSoundsPanel() {
@@ -47,6 +57,14 @@ function drawSoundsPanel() {
         let musicEntry = document.createElement("div");
         musicEntry.className = "musicEntry";
         musicPanel.before(musicEntry);
+        const url = sounds[i];
+        const idWithTime = url.substring(url.lastIndexOf("=") + 1);
+
+        let imageLabel = document.createElement("img");
+        imageLabel.className = "musicImage";
+        imageLabel.src = `https://img.youtube.com/vi/${idWithTime}/default.jpg`;
+        musicEntry.appendChild(imageLabel);
+
         let textLabel = document.createElement("p");
         textLabel.className = "musicLabel";
         textLabel.innerHTML = titles[i];
@@ -89,6 +107,7 @@ document.getElementById("playButton").addEventListener("click", function () {
         playVideo();
     }
 });
+
 function updateTodoList() {
     todoList = localStorage.getItem("todo");
     todoList = JSON.parse(todoList);
@@ -176,6 +195,52 @@ let timerText = document.createElement("h1");
 timerText.className = "timerText";
 timerText.innerHTML = "0:00";
 container.appendChild(timerText);
+
+//createTimeSelectionBar
+let timeSelection = document.createElement("div");
+timeSelection.className = "timeSelection";
+container.appendChild(timeSelection);
+
+let studyModeButton = document.createElement("div");
+// timeSelection.className = "timeSelection";
+studyModeButton.innerHTML = "Study (25m)";
+
+timeSelection.appendChild(studyModeButton);
+let breakModeButton = document.createElement("div");
+breakModeButton.innerHTML = "Break (5m)";
+// timeSelection.className = "timeSelection";
+timeSelection.appendChild(breakModeButton);
+function updateModeColor() {
+    // studyModeButton.style.borderColor = studyMode ? "#1d1d1dff" : "#ffffffff";
+    // breakModeButton.style.borderColor = !studyMode ? "#1d1d1dff" : "#ffffffff";
+    studyModeButton.style.background = studyMode ? "#109d03ff" : "#175c11";
+    breakModeButton.style.background = !studyMode ? "#109d03ff" : "#175c11";
+}
+if (localStorage.getItem("studyMode") != null) {
+    studyMode = JSON.parse(localStorage.getItem("studyMode"));
+    updateModeColor();
+}
+studyModeButton.addEventListener("click", function () {
+    if (!studyMode) {
+        studyMode = true;
+        updateModeColor();
+        timeLeft = 1500;
+        timerIsOn = false;
+        toggleTimerState();
+    }
+
+    localStorage.setItem("studyMode", studyMode);
+});
+breakModeButton.addEventListener("click", function () {
+    if (studyMode) {
+        studyMode = false;
+        updateModeColor();
+        timeLeft = 300;
+        timerIsOn = false;
+        toggleTimerState();
+    }
+    localStorage.setItem("studyMode", studyMode);
+});
 
 container.appendChild(startTimerButton);
 container.appendChild(resetButton);
@@ -285,7 +350,6 @@ function updateList() {
         todoItemDiv.after(todoOptions);
         todoItemRemove.addEventListener("click", function () {
             let todoListItemIndex = this.id;
-            console.log(this);
             todoListItemIndex = String(todoListItemIndex).slice(
                 8,
                 todoListItemIndex.length
@@ -325,7 +389,6 @@ function updateList() {
         animation: 150, // smooth animation in ms
         ghostClass: "sortable-ghost", // optional, adds class when dragging
         onEnd: function (evt) {
-            console.log("dragged");
             const newOrder = [];
             ul.querySelectorAll("li").forEach((li) => {
                 const text = li.querySelector("p")?.textContent;
@@ -390,6 +453,7 @@ createNewBtn.addEventListener("click", function () {
     localStorage.setItem("todo", JSON.stringify(todoList));
     updateList();
 });
+
 function clamp(value, min, max) {
     return Math.max(min, Math.min(value, max));
 }
@@ -419,12 +483,19 @@ function setTextLabel() {
     )}) Learnify`;
     timerText.innerHTML = timeString;
 }
-function toggleTimerState() {
+function updateTimerLabel() {
     if (timerIsOn) {
         startTimerButton.innerHTML = "Pause";
     } else {
-        startTimerButton.innerHTML = "Study";
+        if (studyMode) {
+            startTimerButton.innerHTML = "Study";
+        } else {
+            startTimerButton.innerHTML = "Continue Break";
+        }
     }
+}
+function toggleTimerState() {
+    updateTimerLabel();
     localStorage.setItem("timerIsOn", JSON.stringify(timerIsOn));
     if (countdown !== null) {
         clearInterval(countdown);
@@ -438,7 +509,8 @@ function toggleTimerState() {
 }
 updateList();
 resetButton.addEventListener("click", function () {
-    timeLeft = 1500;
+    timeLeft = studyMode ? 1500 : 300;
+    // timeLeft = studyMode ? 1500 : 3;
     localStorage.setItem("timeLeft", JSON.stringify(timeLeft));
     timerIsOn = false;
     toggleTimerState();
@@ -471,12 +543,16 @@ worker.onmessage = (e) => {
         timeLeft = clamp(timeLeft - 0.1, 0, 100000);
 
         if (timeLeft <= 0.1) {
+            const sound = new Audio("ringtone.mp3");
+            sound.play();
             timerText.innerHTML = "0:00";
             timerIsOn = false;
             timeLeft = 1500;
+            studyMode = true;
             toggleTimerState();
             return;
         }
     }
     setTextLabel();
 };
+updateTimerLabel();

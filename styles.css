@@ -30,6 +30,8 @@ border-radius: 10px;
 
 }
 #musicSettings{
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
 
   display: flex;          /* enables flex layout */
     background-color: #ffffff;
@@ -45,9 +47,14 @@ border-radius: 10px;
 margin-top: 0.5rem;
 display: none
 }
+
 #currentPlaying{
-margin-left: 10%;
+/* margin-left: 10%; */
 margin-top: 1%;
+justify-content: center;
+text-align: center;
+width: 100%;
+height: 100%;
     display: inline-block;
 font-size: clamp(0rem, 2vw, 5rem);
 
@@ -56,27 +63,40 @@ font-size: clamp(0rem, 2vw, 5rem);
     cursor: pointer;
     height: 15%;
     text-align: center;
-overflow: hidden;
+/* overflow: hidden; */
 margin-bottom: 1rem;
   margin: 5px;
   color: white;
   font-weight: bolder;
   border-radius: 10px;
     background-color: #444;
- 
-    
+ display: flex;
 
+}
+.musicImage {
+    display: inline-block;
+  justify-content: left;
+    z-index: index;
+  
+  width: 25%;       
+  aspect-ratio: 16/9;     
+  background-image: url('https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg');
+  background-size: cover; 
+  background-position: center;
+  border-radius: 8px;   
 }
 
 .musicLabel{
      cursor: pointer;
     margin: 0px;
-    width: 100%;
+    width: 90%;
     height: 100%;
-    
-font-size: clamp(0rem, 2vw, 5rem);
-     margin-top: 8%;
-     /* font-size: 90%; */
+    /* justify-content: right; */
+font-size: clamp(0px, 1.4vw, 5rem);
+   display: flex;
+  justify-content: center;
+  align-items: center;   
+  text-align: center;    
 }
 
 #myVideo{
@@ -124,9 +144,10 @@ body {
 
 .hugeBtn {
     border-style: solid;
+    border: 2px solid white;
     border-top: 2px solid white;
     border-bottom: 2px solid white;
-    width: clamp(200px, 40%, 400px);
+    /* width: clamp(200px, 40%, 400px); */
     color: white;
     font-size: clamp(1.5rem, 3vw, 3rem);
     display: inline-flex;
@@ -141,24 +162,25 @@ body {
 
 #studyButton {
     border-radius: 1.25rem 0 0 1.25rem;
-    border-left: 2px solid white;
+    /* border-left: 2px solid white; */
     background-color: rgb(88, 72, 125);
 
     width: clamp(200px, 30%, 400px);
     aspect-ratio: 4.5/1.2;
     font-size: clamp(1rem, 2.5vw, 3rem);
     margin-left: 17%;
+/* border-right-width: 0px; */
 
 }
 
 #resetButton {
     border-radius: 0 1.25rem 1.25rem 0;
-    border-right: 2px solid white;
+    /* border-right: 2px solid white; */
     background-color: rgb(187, 49, 49);
-    width: clamp(56.67px, 10%, 133.3px);
+    width: clamp(67px, 10%, 133.3px);
     aspect-ratio: 1.5/1.2;
     font-size: clamp(1rem, 2.5vw, 3rem);
-
+/* border-left-width: 0px; */
 }
 
 #resetButton:active,
@@ -176,9 +198,7 @@ body {
     font-size: clamp(2rem, 3vw, 4rem);
     color: #ffffff;
     font-weight: 300;
-    /* margin: 2%; */
     margin: 1rem 0rem;
-    /* aspect-ratio: 5/1; */
     width: 15rem;
 }
 
@@ -187,7 +207,7 @@ body {
     font-size: clamp(2rem, 8vw, 8rem);
     font-weight: 400;
     color: rgb(255, 255, 255);
-    margin: 15% 25%;
+    margin: 17% 24%;
 }
 
 /* --- Create New / Clear Buttons --- */
@@ -360,9 +380,53 @@ body {
     height: 100%;
     /* make body full height */
 }
+.timeSelection{
+    position: absolute;
+    color: rgb(255, 255, 255);
+    margin: 14% 24%;
 
+    background-color: #444;
+    opacity: 0.8;
+    /* width: 20%; */
+    width: clamp(10px, 20%, 400px);
+    aspect-ratio: 7/1;
+    display:flex;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;  
+
+}
+.timeSelection div{
+    text-align: center;
+    border-radius: 5px 5px 0px 0px;
+    color: rgb(255, 255, 255);
+    /* margin: 5% 25%; */
+    margin: 2%;
+    background-color: #175c11;
+    /* opacity: 0.5; */
+    border-width: 2px;
+    border-color: rgb(255, 255, 255);
+    border-style: solid;
+    /* width: 50%; */
+    width: clamp(1px, 50%, 500px);
+
+    aspect-ratio: 5/1;
+    transition: transform 0.1s;
+    font-size: clamp(0rem, 1.2vw, 5rem);
+    cursor: pointer;
+
+
+
+}
+.timeSelection :hover{
+    transform: scale(1.1);
+    background-color: rgb(26, 171, 255);
+}
 /* --- Contenteditable --- */
 [contenteditable]:focus {
     outline: none;
     box-shadow: none;
 }
+
+
