@@ -13,8 +13,48 @@ let sounds = [
     "https://www.youtube.com/watch?v=Rm2vkXRFJ-s",
 ];
 let titles = ["Alpha Brain Waves", "Lofi Girl", "Ambient", "Study With Duo"];
-let musicPanel = document.getElementById("musicSettings");
+
+if (localStorage.getItem("Sounds")) {
+    sounds = JSON.parse(localStorage.getItem("Sounds"));
+    titles = JSON.parse(localStorage.getItem("titles"));
+} else {
+    localStorage.setItem("Sounds", JSON.stringify(sounds));
+    localStorage.setItem("titles", JSON.stringify(titles));
+}
+let musicPanel = document.getElementById("musicList");
 let player;
+function normalizeYouTubeURL(url) {
+    try {
+        const parsed = new URL(url);
+
+        // video ID placeholder
+        let videoId = null;
+
+        if (
+            parsed.hostname === "www.youtube.com" ||
+            parsed.hostname === "youtube.com"
+        ) {
+            // e.g. https://www.youtube.com/watch?v=VIDEO_ID
+            if (parsed.pathname === "/watch" && parsed.searchParams.has("v")) {
+                videoId = parsed.searchParams.get("v");
+            }
+        } else if (parsed.hostname === "youtu.be") {
+            // e.g. https://youtu.be/VIDEO_ID
+            videoId = parsed.pathname.slice(1);
+        }
+
+        // Basic check for YouTube's 11-char video IDs
+        if (videoId && /^[\w-]{11}$/.test(videoId)) {
+            return `https://www.youtube.com/watch?v=${videoId}`;
+        }
+
+        // Not a valid/convertible YouTube link
+        return null;
+    } catch (e) {
+        // Invalid URL string
+        return null;
+    }
+}
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player("myVideo", {
@@ -41,6 +81,9 @@ document.getElementById("openMenu").innerHTML = menuIsOpen
 music_note
 </span>`;
 function openMenu() {
+    document.getElementById("musicPlayer").style.transition =
+        "margin-left 0.5s";
+
     menuIsOpen = !menuIsOpen;
     document.getElementById("musicPlayer").style.marginLeft = menuIsOpen
         ? "0%"
@@ -51,12 +94,29 @@ function openMenu() {
 music_note
 </span>`;
 }
+document.getElementById("addMusic").addEventListener("click", function () {
+    let urlToAdd = document.getElementById("musicInput").value;
+    urlToAdd = normalizeYouTubeURL(urlToAdd);
+    document.getElementById("musicInput").value = "";
+    if (urlToAdd != null) {
+        let name = prompt("Enter a name for the Video");
+        sounds.push(urlToAdd);
+        titles.push(name);
 
+        localStorage.setItem("Sounds", JSON.stringify(sounds));
+        localStorage.setItem("titles", JSON.stringify(titles));
+        drawSoundsPanel();
+    } else {
+        alert("Invalid URL :(");
+    }
+});
 function drawSoundsPanel() {
+    musicPanel.innerHTML = ""; // clears all children instantly
+
     for (let i = 0; i < sounds.length; i++) {
         let musicEntry = document.createElement("div");
         musicEntry.className = "musicEntry";
-        musicPanel.before(musicEntry);
+        musicPanel.appendChild(musicEntry);
         const url = sounds[i];
         const idWithTime = url.substring(url.lastIndexOf("=") + 1);
 
@@ -69,7 +129,25 @@ function drawSoundsPanel() {
         textLabel.className = "musicLabel";
         textLabel.innerHTML = titles[i];
         musicEntry.appendChild(textLabel);
+        let x = document.createElement("div");
+        x.className = "deleteMusic";
+        x.innerHTML = "x";
+        musicEntry.appendChild(x);
+        x.addEventListener("click", function (e) {
+            e.stopPropagation();
 
+            sounds.splice(i, 1);
+            titles.splice(i, 1);
+            localStorage.setItem("Sounds", JSON.stringify(sounds));
+            localStorage.setItem("titles", JSON.stringify(titles));
+            let parent = x.parentElement;
+            parent.style.transition = "all 0.5s";
+            parent.style.marginLeft = "100%";
+            parent.style.opacity = "0";
+            setTimeout(() => {
+                drawSoundsPanel();
+            }, 250);
+        });
         musicEntry.addEventListener("click", function () {
             const url = sounds[i];
             const idWithTime = url.substring(url.lastIndexOf("=") + 1);
@@ -211,8 +289,6 @@ breakModeButton.innerHTML = "Break (5m)";
 // timeSelection.className = "timeSelection";
 timeSelection.appendChild(breakModeButton);
 function updateModeColor() {
-    // studyModeButton.style.borderColor = studyMode ? "#1d1d1dff" : "#ffffffff";
-    // breakModeButton.style.borderColor = !studyMode ? "#1d1d1dff" : "#ffffffff";
     studyModeButton.style.background = studyMode ? "#109d03ff" : "#175c11";
     breakModeButton.style.background = !studyMode ? "#109d03ff" : "#175c11";
 }
@@ -550,6 +626,7 @@ worker.onmessage = (e) => {
             timeLeft = 1500;
             studyMode = true;
             toggleTimerState();
+            updateModeColor();
             return;
         }
     }

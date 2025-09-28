@@ -20,14 +20,21 @@ margin-left: 100%;
 
 }
 #musicPlayer {
+  /* overflow-y: auto; */
+    /* overflow:visible; */
     position: absolute;
 border-radius: 10px;
     width: 20%;
-   margin-left: -20%;
+  
     aspect-ratio: 1/1.5;
     background-color: #6bbaeb;
-    transition: margin-left 0.5s;
+     margin-left: -20%;
+    
 
+}
+#musicPanel{
+    width: 100%;
+    height: 100%;
 }
 #musicSettings{
 border-bottom-left-radius: 10px;
@@ -37,8 +44,10 @@ border-bottom-right-radius: 10px;
     background-color: #ffffff;
      width: 100%;
        height: 10%;
+        top: 90%;
        position: absolute;
-       top: 90%;
+
+      
    
 }
 #playButton{
@@ -60,8 +69,10 @@ font-size: clamp(0rem, 2vw, 5rem);
 
 }
 .musicEntry{
+    transition: all 0.1s;
     cursor: pointer;
-    height: 15%;
+    /* height: 25%; */
+    aspect-ratio: 5/1;
     text-align: center;
 /* overflow: hidden; */
 margin-bottom: 1rem;
@@ -85,7 +96,37 @@ margin-bottom: 1rem;
   background-position: center;
   border-radius: 8px;   
 }
+#musicInput{
+      display: inline;
+    width: 70%;
+    aspect-ratio: 5/1;
+    top:0%;
+    border-radius: 10px;
+    font-size: clamp(0px, 0.8vw, 5rem);
 
+}
+#addMusic{
+    display: inline;
+    background-color: #175c11;
+    position: relative;
+    padding: 2%;
+    color:white;
+    transform:none;
+    transition: all 0.2s;
+    aspect-ratio: 5/1;
+    border-radius: 10px;
+    font-size: clamp(0px, 1.4vw, 5rem); 
+}
+
+#addMusic:hover{
+
+    background-color: rgb(43, 140, 8)
+}
+#musicList{
+    width: 100%;
+    height: 80%;
+    overflow-y: scroll;
+}
 .musicLabel{
      cursor: pointer;
     margin: 0px;
@@ -100,7 +141,7 @@ font-size: clamp(0px, 1.4vw, 5rem);
 }
 
 #myVideo{
-  position: fixed;       /* stays in place when scrolling */
+  position: absolute;       /* stays in place when scrolling */
   bottom: 0;             /* 0px from the bottom */
   left: 0;               /* 0px from the left */
   width: 15%;            /* or whatever width you like */
@@ -339,6 +380,7 @@ margin: auto;
 }
 
 /* --- Delete Button --- */
+
 .deletebtn {
     font-size: clamp(0.8rem, 2vw, 1.2rem);
     width: clamp(20px, 10%, 40px);
@@ -358,7 +400,36 @@ margin: auto;
 
     box-sizing: border-box;   /* include border in width/height if added */
 }
+.musicEntry:hover{
+    background-color: #272626;
+}
+.deleteMusic:hover{
 
+    background-color: #a7a6a6;
+}
+.deletebtn:hover{
+ background-color: #a7a6a6;
+}
+.deleteMusic {
+    font-size: clamp(0.8rem, 2vw, 1.2rem);
+    /* width: clamp(10px, 10%, 100px); */
+    transition:all 0.1s;
+    height: clamp(10px, 50%, 1000px);
+font-weight: 100;
+    aspect-ratio: 1/1;
+    color: rgb(112, 54, 54);
+    background-color: #efefef;
+    position: relative;
+    border-radius: 10px;
+    border: none;
+    transition: all 0.15s;
+    text-align: center;
+    display: inline-flex;     /* center content */
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;   /* include border in width/height if added */
+    top: 25%;
+}
 
 /* --- Headings --- */
 .h4s {
